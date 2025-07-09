@@ -117,7 +117,7 @@ const Navbar = () => {
             Log In
           </Link>
           <Link
-            to="/signup"
+            to="/signone"
             className="block py-3 px-4 text-base hover:bg-gray-800 transition-colors duration-200"
             onClick={() => setIsMenuOpen(false)}
           >
