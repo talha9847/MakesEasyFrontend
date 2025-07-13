@@ -43,7 +43,7 @@ const Companions = () => {
 
   const getCompanions = async () => {
     const result = await axios.get(
-      `http://localhost:5169/api/FourMonth/GetCompanion/${id}`,
+      `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/FourMonth/GetCompanion/${id}`,
       {
         withCredentials: true,
       }
@@ -76,7 +76,7 @@ const Companions = () => {
         formData.append("id", editId);
         console.log(data);
         const result = await axios.put(
-          "http://localhost:5169/api/FourMonth/UpdateCompanions",
+          "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/FourMonth/UpdateCompanions",
           formData,
           {
             withCredentials: true,
@@ -101,7 +101,7 @@ const Companions = () => {
       } else {
         formData.append("pId", id);
         const result = await axios.post(
-          "http://localhost:5169/api/FourMonth/Add4Companion",
+          "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/FourMonth/Add4Companion",
           formData,
           {
             withCredentials: true,

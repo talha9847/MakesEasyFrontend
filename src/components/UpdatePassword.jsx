@@ -47,7 +47,7 @@ const UpdatePassword = () => {
 
     try {
       const result = await axios.post(
-        "http://localhost:5169/api/User/UpdatePassword",
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/UpdatePassword",
         form,
         {
           withCredentials: true,

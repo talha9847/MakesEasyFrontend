@@ -24,13 +24,13 @@
 
 //   const onSubmit = async (data) => {
 //     if (editing) {
-//       await axios.put("http://localhost:5169/api/People/UpdatePeople", data);
+//       await axios.put("https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/UpdatePeople", data);
 //       toast.success("Member updated Successfully");
 //       await getPeople();
 //       setShowModal(false);
 //     } else {
 //       var res = axios.post(
-//         "http://localhost:5169/api/People/InsertPeople/3/1/1/1/1",
+//         "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/InsertPeople/3/1/1/1/1",
 //         data
 //       );
 //       reset();
@@ -40,7 +40,7 @@
 
 //   const Delete = async (id) => {
 //     let res = await axios.delete(
-//       `http://localhost:5169/api/People/DeletePeople/${id}`
+//       `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/DeletePeople/${id}`
 //     );
 
 //     if (res.status === 200) {
@@ -81,7 +81,7 @@
 //     }
 //   };
 //   const handleOccupation = async () => {
-//     var res = await axios.get("http://localhost:5169/Location/GetOccupations");
+//     var res = await axios.get("https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetOccupations");
 //     await getPeople();
 //     var talha = res.data.occupation;
 //     setOccupation(talha);
@@ -90,7 +90,7 @@
 //   const getPeople = async () => {
 //     try {
 //       const res = await axios.get(
-//         "http://localhost:5169/api/People/GetPeopleByVillage",
+//         "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetPeopleByVillage",
 //         {
 //           withCredentials: true,
 //         }
@@ -402,13 +402,13 @@ export const Memb = () => {
 
   const onSubmit = async (data) => {
     if (editing) {
-      await axios.put("http://localhost:5169/api/People/UpdatePeople", data);
+      await axios.put("https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/UpdatePeople", data,{withCredentials:true});
+      setShowModal(false);
       toast.success("Member updated Successfully");
       await getPeople();
-      setShowModal(false);
     } else {
       const res = await axios.post(
-        "http://localhost:5169/api/People/InsertPeople",
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/InsertPeople",
         data,
         {
           withCredentials: true,
@@ -426,10 +426,12 @@ export const Memb = () => {
 
   const Delete = async (id) => {
     let res = await axios.delete(
-      `http://localhost:5169/api/People/DeletePeople/${id}`
+      `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/DeletePeople/${id}`,
+      { withCredentials: true }
     );
 
     if (res.status === 200) {
+      await getPeople();
       toast.warning(`User Deleted Successfully`);
     } else {
       toast.error("Error in Deleting User");
@@ -468,7 +470,7 @@ export const Memb = () => {
   };
 
   const handleOccupation = async () => {
-    var res = await axios.get("http://localhost:5169/Location/GetOccupations");
+    var res = await axios.get("https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetOccupations");
     await getPeople();
     var talha = res.data.occupation;
     setOccupation(talha);
@@ -477,7 +479,7 @@ export const Memb = () => {
   const getPeople = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5169/api/People/GetPeopleByVillage",
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetPeopleByVillage",
         {
           withCredentials: true,
         }

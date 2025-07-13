@@ -40,7 +40,7 @@ const HelpAndSupport = () => {
   const onSubmit = async (data) => {
     console.log("on Submit clicked");
     const result = await axios.post(
-      "http://localhost:5169/api/Message/PostMessage",
+      "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/Message/PostMessage",
       data
     );
 
@@ -357,7 +357,7 @@ const HelpAndSupport = () => {
       </div>
 
       {/* Map Section */}
-      <div className="container mx-auto px-6 py-16">
+      <div className="container mx-auto px-20 py-16">
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 lg:pr-16 mb-10 lg:mb-0">
             <h2 className="text-3xl font-bold mb-6">Visit Our Office</h2>

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Student = () => {
   const [showModal, setShowModal] = useState(false);
@@ -23,7 +25,7 @@ export const Student = () => {
   const getStudents = async () => {
     console.log("ljklk");
     const result = await axios.get(
-      "http://localhost:5169/api/People/GetStudents",
+      "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetStudents",
       { withCredentials: true }
     );
     if (result.status == 200) {
@@ -34,24 +36,28 @@ export const Student = () => {
 
   const onSubmit = async (data) => {
     if (editing) {
+      console.log("ljl jljl lljl");
       let id = editId;
       let updatedData = { ...data, id: id };
       const result = await axios.put(
-        "http://localhost:5169/api/People/UpdateStudent",
-        updatedData
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/UpdateStudent",
+        updatedData,
+        { withCredentials: true }
       );
       if (result.status == 200) {
+        toast.success("Student Updated Successfullly");
         await getStudents();
         setShowModal(false);
       }
     } else {
       const result = await axios.post(
-        "http://localhost:5169/api/People/InsertStudent",
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/InsertStudent",
         data,
         { withCredentials: true }
       );
       if (result.status == 200) {
         await getStudents();
+        toast.success("Student Added Successfully")
         setShowModal(false);
       }
     }
@@ -96,12 +102,13 @@ export const Student = () => {
 
     if (result.isConfirmed) {
       const del = await axios.delete(
-        `http://localhost:5169/api/People/DeleteStudent/${id}`,
+        `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/DeleteStudent/${id}`,
         { withCredentials: true }
       );
 
       if (del.status == 200) {
-        alert("Deleted Successfully");
+        toast.warning("Student Deleted Successfulllyy")
+        await getStudents();
       }
     }
   };
@@ -112,11 +119,12 @@ export const Student = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="navbar border-2 border-red-400 h-12">
         <Navbar />
       </div>
 
-      <div className="lg:mx-8 ml-0 px-3 sm:px-4 lg:px-6">
+      <div className="lg:mx-8 ml-0 px-3 sm:px-4 mt-[16px] lg:px-6">
         {/* Header Section */}
         <div className="top flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4">
           <h1 className="text-xl sm:text-2xl lg:text-3xl flex items-center gap-3 font-bold text-gray-800">
@@ -125,6 +133,7 @@ export const Student = () => {
           </h1>
           <button
             onClick={() => {
+              setEditing(false)
               setShowModal(true);
               reset({
                 name: "",
@@ -148,7 +157,7 @@ export const Student = () => {
             <h1 className="pl-4 sm:pl-6 text-lg sm:text-xl font-sans font-semibold py-4 bg-black text-white">
               Student List
             </h1>
-            
+
             {/* Desktop Table View */}
             <div className="hidden md:block overflow-x-auto">
               <div className="max-h-[400px] lg:max-h-[500px] overflow-y-auto">
@@ -180,12 +189,24 @@ export const Student = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     <tr className="hover:bg-gray-50 transition-colors">
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">0</td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">John Doe</td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">9876543210</td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">40 Days</td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">Computer Science</td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">2023</td>
+                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                        0
+                      </td>
+                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                        John Doe
+                      </td>
+                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                        9876543210
+                      </td>
+                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                        40 Days
+                      </td>
+                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                        Computer Science
+                      </td>
+                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                        2023
+                      </td>
                       <td className="px-4 lg:px-6 py-3 lg:py-4">
                         <div className="flex space-x-2">
                           <button className="p-2 rounded-full hover:bg-gray-200 transition-colors">
@@ -198,14 +219,29 @@ export const Student = () => {
                       </td>
                     </tr>
 
-                    {students.map((c,ind) => (
-                      <tr key={c.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">{ind+1}</td>
-                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">{c.name}</td>
-                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">{c.mobile}</td>
-                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">{c.waqt}</td>
-                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">{c.field}</td>
-                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">{c.year}</td>
+                    {students.map((c, ind) => (
+                      <tr
+                        key={c.id}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
+                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                          {ind + 1}
+                        </td>
+                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                          {c.name}
+                        </td>
+                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                          {c.mobile}
+                        </td>
+                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                          {c.waqt}
+                        </td>
+                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                          {c.field}
+                        </td>
+                        <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
+                          {c.year}
+                        </td>
                         <td className="px-4 lg:px-6 py-3 lg:py-4">
                           <div className="flex space-x-2">
                             <button
@@ -252,16 +288,28 @@ export const Student = () => {
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                    <div><span className="font-medium">Mobile:</span> 9876543210</div>
-                    <div><span className="font-medium">Waqt:</span> 40 Days</div>
-                    <div><span className="font-medium">Field:</span> Computer Science</div>
-                    <div><span className="font-medium">Year:</span> 2023</div>
+                    <div>
+                      <span className="font-medium">Mobile:</span> 9876543210
+                    </div>
+                    <div>
+                      <span className="font-medium">Waqt:</span> 40 Days
+                    </div>
+                    <div>
+                      <span className="font-medium">Field:</span> Computer
+                      Science
+                    </div>
+                    <div>
+                      <span className="font-medium">Year:</span> 2023
+                    </div>
                   </div>
                 </div>
               </div>
 
               {students.map((c) => (
-                <div key={c.id} className="border-b border-gray-200 p-4 hover:bg-gray-50 transition-colors">
+                <div
+                  key={c.id}
+                  className="border-b border-gray-200 p-4 hover:bg-gray-50 transition-colors"
+                >
                   <div className="space-y-2">
                     <div className="flex justify-between items-start">
                       <h3 className="font-semibold text-gray-900">{c.name}</h3>
@@ -287,10 +335,18 @@ export const Student = () => {
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                      <div><span className="font-medium">Mobile:</span> {c.mobile}</div>
-                      <div><span className="font-medium">Waqt:</span> {c.waqt}</div>
-                      <div><span className="font-medium">Field:</span> {c.field}</div>
-                      <div><span className="font-medium">Year:</span> {c.year}</div>
+                      <div>
+                        <span className="font-medium">Mobile:</span> {c.mobile}
+                      </div>
+                      <div>
+                        <span className="font-medium">Waqt:</span> {c.waqt}
+                      </div>
+                      <div>
+                        <span className="font-medium">Field:</span> {c.field}
+                      </div>
+                      <div>
+                        <span className="font-medium">Year:</span> {c.year}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -456,7 +512,9 @@ export const Student = () => {
                       <option value="MDS">MDS (Dental Surgery)</option>
                       <option value="BPT">BPT (Physiotherapy)</option>
                       <option value="MPT">MPT (Physiotherapy)</option>
-                      <option value="BMLT">BMLT (Medical Lab Technology)</option>
+                      <option value="BMLT">
+                        BMLT (Medical Lab Technology)
+                      </option>
                       <option value="BOT">BOT (Occupational Therapy)</option>
                       <option value="BASLP">BASLP (Speech & Audiology)</option>
                       <option value="B.Sc. Nursing">B.Sc. Nursing</option>
