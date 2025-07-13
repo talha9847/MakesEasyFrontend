@@ -31,7 +31,7 @@ const UserManagement = () => {
   const fetchData = async () => {
     try {
       var response = await axios.get(
-        "http://localhost:5169/api/User/GetUsers",
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/GetUsers",
         { withCredentials: true }
       );
       var data = response.data;
@@ -59,7 +59,7 @@ const UserManagement = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:5169/api/User/UpdateStatus/${userId}/${status}`,{},
+        `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/UpdateStatus/${userId}/${status}`,{},
         { withCredentials: true }
       );
       console.log("Server response:", response.data);
