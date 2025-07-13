@@ -25,13 +25,13 @@ const Home = () => {
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link
-              to="/admin/dashboard"
+              to="/signone"
               className="bg-black text-white px-8 py-3 rounded-lg text-xl font-medium hover:bg-gray-800 transition flex items-center gap-2 shadow-lg hover:shadow-xl"
             >
               Get Started →
             </Link>
             <Link
-              to="/demo"
+              to="/login"
               className="bg-white text-black border-2 border-black px-8 py-3 rounded-lg text-xl font-medium hover:bg-gray-50 transition shadow-lg hover:shadow-xl"
             >
               Watch Demo
