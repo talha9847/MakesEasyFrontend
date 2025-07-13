@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import Sign from "./components/Sign";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -20,6 +19,7 @@ import FourMonth from "./AdminComponents/FourMonth";
 import FourtyDays from "./AdminComponents/FourtyDays";
 import Companions from "./AdminComponents/Companions";
 import Companion from "./AdminComponents/Companion";
+import UDashboard from "./UserComponents/UDashboard";
  const App = () => {
   return (
     <Router>
@@ -44,7 +44,7 @@ import Companion from "./AdminComponents/Companion";
             <Route path="/admin/fourtydays" element={<FourtyDays />} />
             <Route path="/admin/companions" element={<Companions />} />
             <Route path="/admin/companion" element={<Companion />} />
-              
+            <Route path="/user/dashboard" element={<UDashboard />} />
           </Routes>
         </div>
         <Footer /> {/* Footer will stay at the bottom */}

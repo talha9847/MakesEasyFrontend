@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Turtle } from "lucide-react";
 
 const Login = () => {
+  const navigate=useNavigate();
   const {
     register,
     handleSubmit,
@@ -46,7 +47,7 @@ const Login = () => {
             }
           );
           if (result.status == 200) {
-            window.location.href = "admin/dashboard";
+            navigate("/admin/dashboard");
           }
         } else if (result.data.role == "Admin2") {
           setAvailableRoles(["Village Admin", "Taluka Admin"]);
@@ -58,6 +59,11 @@ const Login = () => {
             "District Admin",
           ]);
           setTalukaModal(true);
+        } else if (result.data.role == "User") {
+          toast.success("Login Successfull");
+          setTimeout(() => {
+            navigate("/user/dashboard");
+          }, 1000);
         }
       } else {
         return;
@@ -81,8 +87,8 @@ const Login = () => {
           }
         );
 
-        if(result.status==200){
-          window.location.href="admin/dashboard"
+        if (result.status == 200) {
+          navigate("/admin/dashboard");
         }
       }
       if (role == "Taluka Admin") {
@@ -95,7 +101,7 @@ const Login = () => {
           }
         );
         if (result.status == 200) {
-          window.location.href = "admin/dashboard";
+          navigate("/admin/dashboard");
         }
       } else if (role == "District Admin") {
         form.append("role", "Admin3");
@@ -108,7 +114,7 @@ const Login = () => {
         );
 
         if (result.status == 200) {
-          window.location.href = "admin/dashboard";
+          navigate("/admin/dashboard");
         }
       }
     } catch (error) {
@@ -271,7 +277,7 @@ const Login = () => {
           <div className="text-center text-sm text-gray-600">
             Don't have an account?{" "}
             <Link
-              to="/signup"
+              to="/signone"
               className="text-black font-semibold hover:underline"
             >
               Sign Up
