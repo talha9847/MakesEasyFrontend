@@ -31,7 +31,7 @@ export const UDashboard = () => {
     const fetchStats = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5169/api/People/GetCount",
+          "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetCount",
           {
             withCredentials: true,
           }
