@@ -54,7 +54,7 @@ const UpdatePassword = () => {
         }
       );
 
-      if(result.status==409){
+      if (result.status == 409) {
         toast.error("New Password is cannot be same as Previous");
         return;
       }
@@ -73,7 +73,7 @@ const UpdatePassword = () => {
           "Invalid or expired reset token. Please request a new reset link."
         );
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error("Password cannot be same as Current password");
       }
     } finally {
       setIsLoading(false);
