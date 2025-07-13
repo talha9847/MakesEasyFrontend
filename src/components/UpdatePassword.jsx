@@ -54,6 +54,10 @@ const UpdatePassword = () => {
         }
       );
 
+      if(result.status==409){
+        toast.error("New Password is cannot be same as Previous");
+        return;
+      }
       if (result.status === 200) {
         toast.success("Password updated successfully!");
         setTimeout(() => {
