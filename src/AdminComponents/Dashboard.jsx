@@ -53,7 +53,7 @@ export const Dashboard = () => {
         {/* Sidebar - Hidden on mobile, visible on desktop */}
 
         {/* Main Content */}
-        <div className="flex-1 p-4 sm:p-6 lg:p-8 pt-20  transition-all duration-300">
+        <div className="flex-1 p-4 sm:p-6 lg:p-8 pt-4  transition-all duration-300">
           {/* Welcome Section */}
           <div className="mb-6 sm:mb-8">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
