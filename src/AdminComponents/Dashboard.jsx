@@ -13,6 +13,7 @@ import {
   PieChart,
   TrendingUp,
   Eye,
+  Loader2Icon,
   Calendar as CalendarIcon,
 } from "lucide-react";
 import axios from "axios";
@@ -27,24 +28,41 @@ export const Dashboard = () => {
     "40Days": 0,
   });
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const fetchStats = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetCount",
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.status == 200) {
+        setStats(res.data.count);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await axios.get(
-          "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetCount",
-          {
-            withCredentials: true,
-          }
-        );
-        setStats(res.data.count);
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchStats();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center">
+        <Navbar />
+        <div className="text-center">
+          <Loader2Icon className="w-12 h-12 text-black animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">Loading Dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
@@ -136,7 +154,12 @@ export const Dashboard = () => {
             </div>
 
             {/* Card 4 - 4 Months */}
-            <div onClick={()=>{navigate("/admin/fourmonth")}} className="hover:cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105">
+            <div
+              onClick={() => {
+                navigate("/admin/fourmonth");
+              }}
+              className="hover:cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105"
+            >
               <div className="flex justify-between items-start mb-4">
                 <div className="p-3 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl group-hover:from-orange-100 group-hover:to-orange-200 transition-all duration-300">
                   <Calendar className="h-6 w-6 text-orange-600" />
@@ -153,7 +176,12 @@ export const Dashboard = () => {
             </div>
 
             {/* Card 5 - 40 Days */}
-            <div onClick={()=>{navigate("/admin/fourtydays")}} className="hover:cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105">
+            <div
+              onClick={() => {
+                navigate("/admin/fourtydays");
+              }}
+              className="hover:cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105"
+            >
               <div className="flex justify-between items-start mb-4">
                 <div className="p-3 bg-gradient-to-br from-rose-50 to-rose-100 rounded-xl group-hover:from-rose-100 group-hover:to-rose-200 transition-all duration-300">
                   <Clock className="h-6 w-6 text-rose-600" />
