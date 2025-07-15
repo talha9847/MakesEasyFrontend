@@ -55,10 +55,6 @@
 
 // export default Navbar;
 
-
-
-
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
@@ -66,12 +62,33 @@ import home from "../assets/home.svg";
 import about from "../assets/about.svg";
 import contact from "../assets/contact.svg";
 import logout from "../assets/logout.svg";
+import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/Logout",
+        null,
+        { withCredentials: true }
+      );
+      toast.success("Logged out successfully");
+      navigate("/login");
+
+      localStorage.clear();
+    } catch (error) {
+      toast.error("Logout failed");
+    }
   };
 
   const navItems = [
@@ -83,6 +100,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-black text-white shadow-lg z-50">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="lg:px-9  px-4">
         <div className="flex justify-between items-center py-3 lg:py-2">
           {/* Logo Section */}
@@ -99,24 +117,39 @@ const Navbar = () => {
 
           {/* Desktop Nav Links */}
           <ul className="hidden lg:flex items-center gap-6 xl:gap-8 text-lg">
-            {navItems.map((item, index) => (
-              <Link
-                key={index}
-                to={item.to}
-                className="relative flex flex-col items-center group px-2 py-1"
-              >
-                {/* Icon */}
-                <img
-                  className="h-6 w-6 transition-transform duration-300 group-hover:scale-125"
-                  src={item.img}
-                  alt={item.text}
-                />
-                {/* Hover Tooltip */}
-                <span className="absolute bottom-[-35px] px-3 py-1 text-xs font-medium rounded-md bg-white text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 whitespace-nowrap">
-                  {item.text}
-                </span>
-              </Link>
-            ))}
+            {navItems.map((item, index) =>
+              item.text == "Logout" ? (
+                <li
+                  key={index}
+                  className="relative flex flex-col items-center group px-2 py-1 cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  <img
+                    className="h-6 w-6 transition-transform duration-300 group-hover:scale-125"
+                    src={item.img}
+                    alt={item.text}
+                  />
+                  <span className="absolute bottom-[-35px] px-3 py-1 text-xs font-medium rounded-md bg-white text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 whitespace-nowrap">
+                    {item.text}
+                  </span>
+                </li>
+              ) : (
+                <Link
+                  key={index}
+                  to={item.to}
+                  className="relative flex flex-col items-center group px-2 py-1"
+                >
+                  <img
+                    className="h-6 w-6 transition-transform duration-300 group-hover:scale-125"
+                    src={item.img}
+                    alt={item.text}
+                  />
+                  <span className="absolute bottom-[-35px] px-3 py-1 text-xs font-medium rounded-md bg-white text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 whitespace-nowrap">
+                    {item.text}
+                  </span>
+                </Link>
+              )
+            )}
           </ul>
 
           {/* Mobile Menu Button */}
@@ -158,11 +191,7 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className="flex items-center gap-4 px-4 py-3 hover:bg-gray-800 transition-colors duration-200 rounded-lg mx-2"
                 >
-                  <img
-                    className="h-5 w-5"
-                    src={item.img}
-                    alt={item.text}
-                  />
+                  <img className="h-5 w-5" src={item.img} alt={item.text} />
                   <span className="text-base font-medium">{item.text}</span>
                 </Link>
               ))}
