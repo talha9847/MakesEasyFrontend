@@ -367,6 +367,7 @@ import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import { Loader2 } from "lucide-react";
 
 export const Memb = () => {
   const [editing, setEditing] = useState(false);
@@ -376,6 +377,7 @@ export const Memb = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -402,7 +404,11 @@ export const Memb = () => {
 
   const onSubmit = async (data) => {
     if (editing) {
-      await axios.put("https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/UpdatePeople", data,{withCredentials:true});
+      await axios.put(
+        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/UpdatePeople",
+        data,
+        { withCredentials: true }
+      );
       setShowModal(false);
       toast.success("Member updated Successfully");
       await getPeople();
@@ -470,13 +476,16 @@ export const Memb = () => {
   };
 
   const handleOccupation = async () => {
-    var res = await axios.get("https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetOccupations");
+    var res = await axios.get(
+      "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetOccupations"
+    );
     await getPeople();
     var talha = res.data.occupation;
     setOccupation(talha);
   };
 
   const getPeople = async () => {
+    setLoading(true);
     try {
       const res = await axios.get(
         "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetPeopleByVillage",
@@ -484,7 +493,10 @@ export const Memb = () => {
           withCredentials: true,
         }
       );
-      setPeople(res.data.people);
+      if (res.status == 200) {
+        setPeople(res.data.people);
+        setLoading(false);
+      }
     } catch (error) {
       console.error("Error fetching people:", error);
     }
@@ -495,6 +507,17 @@ export const Memb = () => {
     getPeople();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center">
+        <Navbar />
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-black animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">Loading Members...</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer position="top-right" autoClose={3000} />

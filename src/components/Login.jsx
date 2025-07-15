@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useState } from "react";
 import { Turtle } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Login = () => {
   const [talukaModal, setTalukaModal] = useState(false);
   const [availableRoles, setAvailableRoles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -88,6 +90,7 @@ const Login = () => {
 
   const roleFunction = async (role) => {
     try {
+      setLoading2(true);
       let form = new FormData();
       form.append("tempToken", localStorage.getItem("token"));
       if (role == "Village Admin") {
@@ -102,6 +105,7 @@ const Login = () => {
 
         if (result.status == 200) {
           navigate("/admin/dashboard");
+          setLoading2(false);
         }
       }
       if (role == "Taluka Admin") {
@@ -115,6 +119,7 @@ const Login = () => {
         );
         if (result.status == 200) {
           navigate("/admin/dashboard");
+          setLoading2(false);
         }
       } else if (role == "District Admin") {
         form.append("role", "Admin3");
@@ -128,6 +133,7 @@ const Login = () => {
 
         if (result.status == 200) {
           navigate("/admin/dashboard");
+          setLoading2(false);
         }
       }
     } catch (error) {
@@ -333,17 +339,24 @@ const Login = () => {
             </h2>
 
             <div className="flex items-center justify-center flex-col gap-3">
-              {availableRoles.map((c, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    roleFunction(c);
-                  }}
-                  className="bg-black text-white px-3 rounded-md"
-                >
-                  {c}
-                </button>
-              ))}
+              {loading2 ? (
+                <div className="text-center">
+                  <Loader2 className="w-12 h-12 text-black animate-spin mx-auto mb-4" />
+                  <p className="text-gray-600 text-lg">Redirecting...</p>
+                </div>
+              ) : (
+                availableRoles.map((c, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      roleFunction(c);
+                    }}
+                    className="bg-black text-white px-3 rounded-md"
+                  >
+                    {c}
+                  </button>
+                ))
+              )}
             </div>
 
             <button
