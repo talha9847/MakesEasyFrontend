@@ -184,17 +184,28 @@ const Navbar = () => {
         >
           <div className="py-4 border-t border-gray-700">
             <ul className="space-y-1">
-              {navItems.map((item, index) => (
-                <Link
-                  key={index}
-                  to={item.to}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-4 px-4 py-3 hover:bg-gray-800 transition-colors duration-200 rounded-lg mx-2"
-                >
-                  <img className="h-5 w-5" src={item.img} alt={item.text} />
-                  <span className="text-base font-medium">{item.text}</span>
-                </Link>
-              ))}
+              {navItems.map((item, index) =>
+                item.text == "Logout" ? (
+                  <li
+                    key={index}
+                    className="flex items-center gap-4 px-4 py-3 hover:bg-gray-800 transition-colors duration-200 rounded-lg mx-2"
+                    onClick={handleLogout}
+                  >
+                    <img className="h-5 w-5" src={item.img} alt={item.text} />
+                    <span className="text-base font-medium">{item.text}</span>
+                  </li>
+                ) : (
+                  <Link
+                    key={index}
+                    to={item.to}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-4 px-4 py-3 hover:bg-gray-800 transition-colors duration-200 rounded-lg mx-2"
+                  >
+                    <img className="h-5 w-5" src={item.img} alt={item.text} />
+                    <span className="text-base font-medium">{item.text}</span>
+                  </Link>
+                )
+              )}
             </ul>
           </div>
         </div>
