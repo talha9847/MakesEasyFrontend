@@ -1,6 +1,6 @@
 "use client";
 
-import { Users, UserPlus, Edit, Trash2 } from "lucide-react";
+import { Users, UserPlus, Edit, Trash2, Loader2 } from "lucide-react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ export const Student = () => {
   const [editing, setEditing] = useState(false);
   const [editId, setEditId] = useState(0);
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -23,20 +24,19 @@ export const Student = () => {
   } = useForm();
 
   const getStudents = async () => {
-    console.log("ljklk");
+    setLoading(true);
     const result = await axios.get(
       "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetStudents",
       { withCredentials: true }
     );
     if (result.status == 200) {
-      console.log(result.data);
       setStudents(result.data.students);
+      setLoading(false);
     }
   };
 
   const onSubmit = async (data) => {
     if (editing) {
-      console.log("ljl jljl lljl");
       let id = editId;
       let updatedData = { ...data, id: id };
       const result = await axios.put(
@@ -57,7 +57,7 @@ export const Student = () => {
       );
       if (result.status == 200) {
         await getStudents();
-        toast.success("Student Added Successfully")
+        toast.success("Student Added Successfully");
         setShowModal(false);
       }
     }
@@ -107,7 +107,7 @@ export const Student = () => {
       );
 
       if (del.status == 200) {
-        toast.warning("Student Deleted Successfulllyy")
+        toast.warning("Student Deleted Successfulllyy");
         await getStudents();
       }
     }
@@ -116,6 +116,18 @@ export const Student = () => {
   useEffect(() => {
     getStudents();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center">
+        <Navbar />
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-black animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">Loading Members...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -133,7 +145,7 @@ export const Student = () => {
           </h1>
           <button
             onClick={() => {
-              setEditing(false)
+              setEditing(false);
               setShowModal(true);
               reset({
                 name: "",
