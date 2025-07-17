@@ -615,6 +615,9 @@ export const Memb = () => {
               <thead className="bg-gray-100 border-b border-gray-200 sticky top-0">
                 <tr>
                   <th className="px-6 py-4 text-left text-gray-900 text-[17px] font-semibold">
+                    No.
+                  </th>
+                  <th className="px-6 py-4 text-left text-gray-900 text-[17px] font-semibold">
                     Name
                   </th>
                   <th className="px-6 py-4 text-left text-gray-900 text-[17px] font-semibold">
@@ -632,11 +635,14 @@ export const Memb = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {filteredPeople.map((member) => (
+                {filteredPeople.map((member, ind) => (
                   <tr
                     key={member.id}
                     className="hover:bg-gray-50 transition-colors"
                   >
+                    <td className="px-6 py-4 whitespace-nowrap font-medium">
+                      {ind + 1}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap font-medium">
                       {member.name}
                     </td>
@@ -683,14 +689,18 @@ export const Memb = () => {
           </div>
 
           {/* Mobile Card View */}
+          {/* Mobile Card View */}
           <div className="lg:hidden max-h-[500px] overflow-y-auto">
-            {filteredPeople.map((member) => (
+            {filteredPeople.map((member, ind) => (
               <div
                 key={member.id}
                 className="border-b border-gray-200 p-4 hover:bg-gray-50"
               >
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex-1">
+                    <span className="text-sm text-gray-600 font-medium mr-2">
+                      {ind + 1}
+                    </span>
                     <h3 className="font-semibold text-lg text-gray-900">
                       {member.name}
                     </h3>

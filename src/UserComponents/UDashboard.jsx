@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../UserComponents/Navbar";
 import {
   Home,
   Users,
@@ -48,7 +48,7 @@ export const UDashboard = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
       <Navbar />
-      <div className="flex">
+      <div className="flex mt-10">
         {/* Sidebar - Hidden on mobile, visible on desktop */}
 
         {/* Main Content */}
@@ -88,7 +88,7 @@ export const UDashboard = () => {
 
             {/* Card 2 - Members */}
             <div
-              onClick={() => navigate("/admin/members")}
+              onClick={() => navigate("/user/members")}
               className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105 cursor-pointer"
             >
               <div className="flex justify-between items-start mb-4">
@@ -112,7 +112,7 @@ export const UDashboard = () => {
 
             {/* Card 3 - Students */}
             <div
-              onClick={() => navigate("/admin/students")}
+              onClick={() => navigate("/user/students")}
               className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105 cursor-pointer"
             >
               <div className="flex justify-between items-start mb-4">
@@ -135,7 +135,7 @@ export const UDashboard = () => {
             </div>
 
             {/* Card 4 - 4 Months */}
-            <div onClick={()=>{navigate("/admin/fourmonth")}} className="hover:cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105">
+            <div onClick={()=>{navigate("/user/fourmonth")}} className="hover:cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105">
               <div className="flex justify-between items-start mb-4">
                 <div className="p-3 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl group-hover:from-orange-100 group-hover:to-orange-200 transition-all duration-300">
                   <Calendar className="h-6 w-6 text-orange-600" />
@@ -152,7 +152,7 @@ export const UDashboard = () => {
             </div>
 
             {/* Card 5 - 40 Days */}
-            <div onClick={()=>{navigate("/admin/fourtydays")}} className="hover:cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105">
+            <div onClick={()=>{navigate("/user/fourtydays")}} className="hover:cursor-pointer bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group hover:scale-105">
               <div className="flex justify-between items-start mb-4">
                 <div className="p-3 bg-gradient-to-br from-rose-50 to-rose-100 rounded-xl group-hover:from-rose-100 group-hover:to-rose-200 transition-all duration-300">
                   <Clock className="h-6 w-6 text-rose-600" />
