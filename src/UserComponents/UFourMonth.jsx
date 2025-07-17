@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const FourMonth = () => {
+export const UFourMonth = () => {
   const [companion, setCompanion] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -276,4 +276,4 @@ export const FourMonth = () => {
   );
 };
 
-export default FourMonth;
+export default UFourMonth;
