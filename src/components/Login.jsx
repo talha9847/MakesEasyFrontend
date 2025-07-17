@@ -64,10 +64,21 @@ const Login = () => {
           ]);
           setTalukaModal(true);
         } else if (result.data.role == "User") {
-          toast.success("Login Successfull");
-          setTimeout(() => {
-            navigate("/user/dashboard");
-          }, 1000);
+          form.append("role", "User");
+          form.append("tempToken", localStorage.getItem("token"));
+          const result = await axios.post(
+            "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/SetScope",
+            form,
+            {
+              withCredentials: true,
+            }
+          );
+          if (result.status == 200) {
+            toast.success("Login Successfull");
+            setTimeout(() => {
+              navigate("/user/dashboard");
+            }, 1000);
+          }
         }
       } else {
         return;
