@@ -24,6 +24,7 @@ import { UMembers } from "./UserComponents/UMembers";
 import UStudent from "./UserComponents/UStudent";
 import UFourMonth from "./UserComponents/UFourMonth";
 import UCompanions from "./UserComponents/UCompanions";
+import UFourtyDays from "./UserComponents/UFourtyDays";
  const App = () => {
   return (
     <Router>
@@ -53,6 +54,7 @@ import UCompanions from "./UserComponents/UCompanions";
             <Route path="/user/students" element={<UStudent />} />
             <Route path="/user/fourmonth" element={<UFourMonth />} />
             <Route path="/user/companions" element={<UCompanions />} />
+            <Route path="/user/fourtydays" element={<UFourtyDays />} />
           </Routes>
         </div>
         <Footer /> {/* Footer will stay at the bottom */}

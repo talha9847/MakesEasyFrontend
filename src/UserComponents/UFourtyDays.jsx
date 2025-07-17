@@ -2,8 +2,6 @@
 
 import {
   Users,
-  Edit,
-  Trash2,
   ArrowLeft,
   Calendar,
   Hash,
@@ -15,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const FourtyDays = () => {
+export const UFourtyDays = () => {
   const [companion, setCompanion] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -152,7 +150,7 @@ export const FourtyDays = () => {
                     {companion.map((c, ind) => (
                       <tr
                         onClick={() => {
-                          navigate("/admin/companion", {
+                          navigate("/user/companion", {
                             state: { id: c.id, name: c.name },
                           });
                         }}
@@ -198,7 +196,7 @@ export const FourtyDays = () => {
               {companion.map((c, ind) => (
                 <div
                   onClick={() => {
-                    navigate("/admin/companion", {
+                    navigate("/user/companion", {
                       state: { id: c.id, name: c.name },
                     });
                   }}
@@ -284,4 +282,4 @@ export const FourtyDays = () => {
   );
 };
 
-export default FourtyDays;
+export default UFourtyDays;

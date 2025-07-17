@@ -33,6 +33,7 @@ const Companions = () => {
   const [showActionMenu, setShowActionMenu] = useState(null);
   const [edit, setEdit] = useState(false);
   const [editId, setEditId] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -42,6 +43,7 @@ const Companions = () => {
   } = useForm();
 
   const getCompanions = async () => {
+    setLoading(true);
     const result = await axios.get(
       `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/FourMonth/GetCompanion/${id}`,
       {
@@ -49,6 +51,7 @@ const Companions = () => {
       }
     );
     if (result.status === 200) {
+      setLoading(false);
       const data = result.data?.result;
 
       if (!data || (Array.isArray(data) && data.length === 0)) {
@@ -58,7 +61,6 @@ const Companions = () => {
       }
     }
   };
-
 
   const handleDelete = (index) => {
     // Add your delete logic here
@@ -135,6 +137,18 @@ const Companions = () => {
   useEffect(() => {
     getCompanions();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center">
+        <Navbar />
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-black animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">Loading Companions...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
@@ -236,11 +250,11 @@ const Companions = () => {
                 <button
                   onClick={() => {
                     setEdit(false);
-                    setShowAddForm(true)
+                    setShowAddForm(true);
                     reset({
-                      date:"",
-                      place:""
-                    })
+                      date: "",
+                      place: "",
+                    });
                   }}
                   className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-100 transition-all duration-200 shadow-md hover:shadow-lg font-medium"
                 >
