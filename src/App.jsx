@@ -55,6 +55,7 @@ import UFourtyDays from "./UserComponents/UFourtyDays";
             <Route path="/user/fourmonth" element={<UFourMonth />} />
             <Route path="/user/companions" element={<UCompanions />} />
             <Route path="/user/fourtydays" element={<UFourtyDays />} />
+            <Route path="/user/companion" element={<UCompanions />} />
           </Routes>
         </div>
         <Footer /> {/* Footer will stay at the bottom */}
