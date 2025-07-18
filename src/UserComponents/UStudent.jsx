@@ -1,6 +1,6 @@
 "use client";
 
-import { Users, UserPlus, Edit, Trash2, Loader2 } from "lucide-react";
+import { Users, Search, Edit, Trash2, Loader2, X } from "lucide-react";
 import Navbar from "../UserComponents/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 export const UStudent = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredStudents, setFilteredStudents] = useState([]);
 
   const getStudents = async () => {
     setLoading(true);
@@ -19,8 +21,31 @@ export const UStudent = () => {
     );
     if (result.status == 200) {
       setStudents(result.data.students);
+      setFilteredStudents(result.data.students);
       setLoading(false);
     }
+  };
+
+  const handleSearch = () => {
+    if (!searchTerm.trim()) {
+      setFilteredStudents(students);
+      return;
+    }
+
+    const filtered = students.filter(
+      (student) =>
+        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        student.mobile.includes(searchTerm) ||
+        student.field.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        student.year.toString().includes(searchTerm) ||
+        student.waqt.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredStudents(filtered);
+  };
+
+  const clearSearch = () => {
+    setSearchTerm("");
+    setFilteredStudents(students);
   };
 
   useEffect(() => {
@@ -53,7 +78,40 @@ export const UStudent = () => {
             <Users className="hover:scale-125 hover:cursor-pointer transition-transform duration-200 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
             Students
           </h1>
+
+          <div className="relative flex-1 lg:w-80 max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search students by name, mobile, field, year, or waqt..."
+              value={searchTerm}
+              onInput={handleSearch}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+              className="w-full pl-10 pr-24 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent shadow-sm transition-all duration-200"
+            />
+            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+              {searchTerm && (
+                <button
+                  onClick={clearSearch}
+                  className="p-1 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
+                  title="Clear search"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
+
+        {/* Search Results Info */}
+        {searchTerm && (
+          <div className="mb-4 text-sm text-gray-600">
+            Found {filteredStudents.length} student
+            {filteredStudents.length !== 1 ? "s" : ""}
+            {searchTerm && ` matching "${searchTerm}"`}
+          </div>
+        )}
 
         {/* Table Section */}
         <div className="table mt-4 sm:mt-6 lg:mt-8 w-full">
@@ -89,28 +147,7 @@ export const UStudent = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    <tr className="hover:bg-gray-50 transition-colors">
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
-                        0
-                      </td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
-                        John Doe
-                      </td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
-                        9876543210
-                      </td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
-                        40 Days
-                      </td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
-                        Computer Science
-                      </td>
-                      <td className="px-4 lg:px-6 py-3 lg:py-4 text-sm lg:text-base">
-                        2023
-                      </td>
-                    </tr>
-
-                    {students.map((c, ind) => (
+                    {filteredStudents.map((c, ind) => (
                       <tr
                         key={c.id}
                         className="hover:bg-gray-50 transition-colors"
@@ -142,31 +179,7 @@ export const UStudent = () => {
 
             {/* Mobile Card View */}
             <div className="md:hidden max-h-[400px] overflow-y-auto">
-              {/* Sample Student Card */}
-              <div className="border-b border-gray-200 p-4 hover:bg-gray-50 transition-colors">
-                <div className="space-y-2">
-                  <div className="flex justify-between items-start">
-                    <h3 className="font-semibold text-gray-900">John Doe</h3>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                    <div>
-                      <span className="font-medium">Mobile:</span> 9876543210
-                    </div>
-                    <div>
-                      <span className="font-medium">Waqt:</span> 40 Days
-                    </div>
-                    <div>
-                      <span className="font-medium">Field:</span> Computer
-                      Science
-                    </div>
-                    <div>
-                      <span className="font-medium">Year:</span> 2023
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {students.map((c) => (
+              {filteredStudents.map((c) => (
                 <div
                   key={c.id}
                   className="border-b border-gray-200 p-4 hover:bg-gray-50 transition-colors"
@@ -193,6 +206,15 @@ export const UStudent = () => {
                 </div>
               ))}
             </div>
+
+            {/* No Results Message */}
+            {searchTerm && filteredStudents.length === 0 && (
+              <div className="p-8 text-center text-gray-500">
+                <Search className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                <p className="text-lg font-medium">No students found</p>
+                <p className="text-sm">Try adjusting your search terms</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

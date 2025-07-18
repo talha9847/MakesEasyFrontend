@@ -62,6 +62,6 @@ import UFourtyDays from "./UserComponents/UFourtyDays";
       </div>
     </Router>
   );
-};
+}; 
 
 export default App;
