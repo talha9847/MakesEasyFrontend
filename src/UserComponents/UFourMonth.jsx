@@ -190,7 +190,7 @@ export const UFourMonth = () => {
               {companion.map((c, ind) => (
                 <div
                   onClick={() => {
-                    navigate("/admin/companions", {
+                    navigate("/user/companions", {
                       state: { id: c.id, name: c.name },
                     });
                   }}
