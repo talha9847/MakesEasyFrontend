@@ -24,7 +24,7 @@ const ForgotPassword = () => {
 
     try {
       const result = await axios.post(
-        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/forgotPassword",
+        "http://localhost:5169/api/User/forgotPassword",
         form,
         {
           withCredentials: true,

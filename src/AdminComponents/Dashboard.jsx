@@ -34,7 +34,7 @@ export const Dashboard = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetCount",
+        "http://localhost:5169/api/People/GetCount",
         {
           withCredentials: true,
         }

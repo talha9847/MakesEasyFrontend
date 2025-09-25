@@ -26,7 +26,7 @@ export const Student = () => {
   const getStudents = async () => {
     setLoading(true);
     const result = await axios.get(
-      "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetStudents",
+      "http://localhost:5169/api/People/GetStudents",
       { withCredentials: true }
     );
     if (result.status == 200) {
@@ -40,7 +40,7 @@ export const Student = () => {
       let id = editId;
       let updatedData = { ...data, id: id };
       const result = await axios.put(
-        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/UpdateStudent",
+        "http://localhost:5169/api/People/UpdateStudent",
         updatedData,
         { withCredentials: true }
       );
@@ -51,7 +51,7 @@ export const Student = () => {
       }
     } else {
       const result = await axios.post(
-        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/InsertStudent",
+        "http://localhost:5169/api/People/InsertStudent",
         data,
         { withCredentials: true }
       );
@@ -102,7 +102,7 @@ export const Student = () => {
 
     if (result.isConfirmed) {
       const del = await axios.delete(
-        `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/DeleteStudent/${id}`,
+        `http://localhost:5169/api/People/DeleteStudent/${id}`,
         { withCredentials: true }
       );
 

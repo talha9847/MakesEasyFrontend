@@ -30,7 +30,7 @@ const Login = () => {
     localStorage.clear();
     try {
       const result = await axios.post(
-        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/Login",
+        "http://localhost:5169/api/User/Login",
         form,
         {
           withCredentials: true,
@@ -44,7 +44,7 @@ const Login = () => {
           form.append("tempToken", localStorage.getItem("token"));
           form.append("role", "Admin1");
           const result = await axios.post(
-            "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/SetScope",
+            "http://localhost:5169/api/User/SetScope",
             form,
             {
               withCredentials: true,
@@ -67,7 +67,7 @@ const Login = () => {
           form.append("role", "User");
           form.append("tempToken", localStorage.getItem("token"));
           const result = await axios.post(
-            "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/SetScope",
+            "http://localhost:5169/api/User/SetScope",
             form,
             {
               withCredentials: true,
@@ -107,7 +107,7 @@ const Login = () => {
       if (role == "Village Admin") {
         form.append("role", "Admin1");
         const result = await axios.post(
-          "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/SetScope",
+          "http://localhost:5169/api/User/SetScope",
           form,
           {
             withCredentials: true,
@@ -122,7 +122,7 @@ const Login = () => {
       if (role == "Taluka Admin") {
         form.append("role", "Admin2");
         const result = await axios.post(
-          "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/SetScope",
+          "http://localhost:5169/api/User/SetScope",
           form,
           {
             withCredentials: true,
@@ -135,7 +135,7 @@ const Login = () => {
       } else if (role == "District Admin") {
         form.append("role", "Admin3");
         const result = await axios.post(
-          "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/SetScope",
+          "http://localhost:5169/api/User/SetScope",
           form,
           {
             withCredentials: true,

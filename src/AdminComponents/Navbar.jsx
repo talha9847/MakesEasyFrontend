@@ -78,7 +78,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/Logout",
+        "http://localhost:5169/api/User/Logout",
         null,
         { withCredentials: true }
       );

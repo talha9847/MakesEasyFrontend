@@ -45,7 +45,7 @@ const UCompanion = () => {
   const getCompanions = async () => {
     setLoading(true);
     const result = await axios.get(
-      `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/FourMonth/Get40Data/${id}`,
+      `http://localhost:5169/api/FourMonth/Get40Data/${id}`,
       {
         withCredentials: true,
       }

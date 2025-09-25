@@ -15,7 +15,7 @@ export const UFourMonth = () => {
   const getCompanions = async () => {
     setLoading(true);
     const result = await axios.get(
-      "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/FourMonth/GetFourMonth",
+      "http://localhost:5169/api/FourMonth/GetFourMonth",
       { withCredentials: true }
     );
     if (result.status == 200) {

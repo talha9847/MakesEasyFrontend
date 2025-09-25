@@ -16,7 +16,7 @@ export const UStudent = () => {
   const getStudents = async () => {
     setLoading(true);
     const result = await axios.get(
-      "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/People/GetStudents",
+      "http://localhost:5169/api/People/GetStudents",
       { withCredentials: true }
     );
     if (result.status == 200) {

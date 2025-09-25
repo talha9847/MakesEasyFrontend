@@ -54,7 +54,7 @@ const SignOne = () => {
 
     try {
       const result = await axios.post(
-        "https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/Register",
+        "http://localhost:5169/api/User/Register",
         data,
         {
           withCredentials: true,
@@ -115,7 +115,7 @@ const SignOne = () => {
     try {
       // Replace with your actual email verification API endpoint
       const result = await axios.post(
-        `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/GenerateOtp/${email}`
+        `http://localhost:5169/api/User/GenerateOtp/${email}`
       );
 
       if (result.status === 200) {
@@ -147,7 +147,7 @@ const SignOne = () => {
     setIsVerifyingOtp(true);
     try {
       const result = await axios.post(
-        `https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/api/User/VerifyOTP/${email}/${otpValue}`
+        `http://localhost:5169/api/User/VerifyOTP/${email}/${otpValue}`
       );
 
       if (result.status === 200) {
@@ -166,7 +166,7 @@ const SignOne = () => {
   };
 
   useEffect(() => {
-    fetch("https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetCountries")
+    fetch("http://localhost:5169/Location/GetCountries")
       .then((res) => res.json())
       .then((data) => {
         setCountries(data.countryModel);
@@ -178,7 +178,7 @@ const SignOne = () => {
 
   useEffect(() => {
     if (selectedCountry) {
-      fetch(`https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetStates/${selectedCountry}`)
+      fetch(`http://localhost:5169/Location/GetStates/${selectedCountry}`)
         .then((res) => res.json())
         .then((data) => {
           setStates(data.stateModel);
@@ -191,7 +191,7 @@ const SignOne = () => {
 
   useEffect(() => {
     if (selectedState) {
-      fetch(`https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetDistricts/${selectedState}`)
+      fetch(` http://localhost:5169/Location/GetDistricts/${selectedState}`)
         .then((res) => res.json())
         .then((data) => {
           setDistricts(data.distModel);
@@ -201,7 +201,7 @@ const SignOne = () => {
 
   useEffect(() => {
     if (selectedDistrict) {
-      fetch(`https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetTalukas/${selectedDistrict}`)
+      fetch(`http://localhost:5169/Location/GetTalukas/${selectedDistrict}`)
         .then((res) => res.json())
         .then((data) => {
           setTalukas(data.talukaModel);
@@ -211,7 +211,7 @@ const SignOne = () => {
 
   useEffect(() => {
     if (selectedTaluka) {
-      fetch(`https://makeseasy-hmahd6dwgmecc0ex.canadacentral-01.azurewebsites.net/Location/GetVillages/${selectedTaluka}`)
+      fetch(`http://localhost:5169/Location/GetVillages/${selectedTaluka}`)
         .then((res) => res.json())
         .then((data) => {
           setVillages(data.villageModel);
